@@ -4,6 +4,7 @@ libs:
   place:
     gridX: 1024
     gridY: 1024
+    debugMode: false
   fittoscreen:
     mode: scaleFit
   mouse: {}
@@ -237,7 +238,7 @@ textures:
     uid: 5e88af18-c12c-4283-b070-a9c0da2a4a02
     padding: 1
     source: 'C:\Users\patry\ct.js\Projects\Watery Caves\_src_assets\sprites\fish_1.png'
-    lastmod: 1627820755869
+    lastmod: 1628106009954
   - name: backgrounds_1_1
     untill: 0
     grid:
@@ -605,7 +606,7 @@ textures:
     closedStrip: true
     r: 0
     tiled: true
-    lastmod: 1627837283402
+    lastmod: 1628102438201
   - name: collision_1
     untill: 0
     grid:
@@ -799,6 +800,88 @@ textures:
     uid: 3b0b875d-c590-4bea-86cf-496b4a90a271
     padding: 1
     source: 'C:\Users\patry\ct.js\Projects\Watery Caves\_src_assets\sprites\heart_1.png'
+  - name: level_01
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 800
+      - 800
+    marginx: 0
+    marginy: 0
+    imgWidth: 1600
+    imgHeight: 1600
+    width: 1600
+    height: 1600
+    offx: 0
+    offy: 0
+    origname: i8472e6c8-ce8b-4692-9cd8-72a4786c44e3.png
+    shape: circle
+    left: 800
+    right: 800
+    top: 800
+    bottom: 800
+    uid: 8472e6c8-ce8b-4692-9cd8-72a4786c44e3
+    padding: 1
+    source: 'C:\Users\patry\ct.js\Projects\Watery Caves\_src_assets\maps\level_01.png'
+    tiled: true
+    r: 0
+    lastmod: 1628102444041
+  - name: signpost_1
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 16
+      - 16
+    marginx: 0
+    marginy: 0
+    imgWidth: 32
+    imgHeight: 32
+    width: 32
+    height: 32
+    offx: 0
+    offy: 0
+    origname: ic4a2b3d6-1287-443e-b907-03689fba44c4.png
+    shape: rect
+    left: 16
+    right: 16
+    top: 3
+    bottom: 16
+    uid: c4a2b3d6-1287-443e-b907-03689fba44c4
+    padding: 1
+    source: >-
+      C:\Users\patry\ct.js\Projects\Watery
+      Caves\_src_assets\sprites\signpost_1.png
+    lastmod: 1628105341074
+  - name: end_1
+    untill: 0
+    grid:
+      - 1
+      - 1
+    axis:
+      - 32
+      - 16
+    marginx: 0
+    marginy: 0
+    imgWidth: 64
+    imgHeight: 32
+    width: 64
+    height: 32
+    offx: 0
+    offy: 0
+    origname: iebff7579-1005-471d-84c0-c85934cd04bd.png
+    shape: rect
+    left: 32
+    right: 32
+    top: 16
+    bottom: 16
+    uid: ebff7579-1005-471d-84c0-c85934cd04bd
+    padding: 1
+    source: 'C:\Users\patry\ct.js\Projects\Watery Caves\_src_assets\sprites\end_1.png'
+    lastmod: 1628105483918
 skeletons: []
 types:
   - name: Submarine
@@ -899,7 +982,7 @@ types:
               ct.sound.spawn('hurt1')
               this.invincibleTimer = ct.speed
 
-              globals.lives -= 1
+              window.globals.lives -= 1
 
               return
           }
@@ -933,7 +1016,7 @@ types:
       lightColor: '#8E9D9E'
       lightOpacity: false
     uid: 69acf836-5938-47d7-adab-6f32f4418c26
-    lastmod: 1628025892212
+    lastmod: 1628106052804
   - name: underwater_plants_1
     depth: 0
     oncreate: ''
@@ -979,8 +1062,10 @@ types:
   - name: CoinWidget
     depth: 0
     oncreate: >-
-      this.text = new PIXI.Text(`0 / ${ct.room.totalCollectables}`,
+      // this.text = new PIXI.Text(`0 / ${ct.room.totalCollectables}`,
       ct.styles.get('Coin'))
+
+      this.text = new PIXI.Text(`0`, ct.styles.get('Coin'))
 
       this.text.x = 16
 
@@ -988,7 +1073,11 @@ types:
 
 
       this.addChild(this.text)
-    onstep: 'this.text.text = `${globals.points} / ${ct.room.totalCollectables}`'
+    onstep: >-
+      // this.text.text = `${window.globals.points} /
+      ${ct.room.totalCollectables}`
+
+      this.text.text = `${window.globals.points}`
     ondraw: ''
     ondestroy: ''
     texture: f2f1351d-f63f-4eb2-9a75-56ab1d8b5d7f
@@ -1046,8 +1135,10 @@ types:
     texture: 5e88af18-c12c-4283-b070-a9c0da2a4a02
     extends:
       ctype: Enemy
+      lightTexture@@texture: d1577c7c-59be-4c80-8498-b310ee28c018
+      lightScale: 2
     uid: 0dd5b6fe-299c-405d-ac0e-0f6be7b3bffd
-    lastmod: 1627842068696
+    lastmod: 1628106058364
   - name: bullet_1
     depth: 0
     oncreate: |-
@@ -1111,6 +1202,33 @@ types:
       ctype: Hazard
     uid: 9267af5f-4610-4123-933b-547b5779ad95
     lastmod: 1627842109992
+  - name: signpost_1
+    depth: 0
+    oncreate: ''
+    onstep: this.move();
+    ondraw: ''
+    ondestroy: ''
+    texture: c4a2b3d6-1287-443e-b907-03689fba44c4
+    extends: {}
+    uid: 3aa42a3d-476f-4dac-8b92-09ded2322514
+    lastmod: 1628105348299
+  - name: end_1
+    depth: 0
+    oncreate: this.started = false
+    onstep: |-
+      if (!this.started) {
+          if (ct.place.meet(this, 'Submarine')) {
+              this.started = true
+              window.fns.changeLevel()
+          }
+      }
+    ondraw: ''
+    ondestroy: ''
+    texture: ebff7579-1005-471d-84c0-c85934cd04bd
+    extends:
+      ctype: Ender
+    uid: 46b2d2d2-da8c-44b8-be6f-55fdc3d47cab
+    lastmod: 1628105987269
 sounds:
   - name: pick1
     uid: b2403a47-5499-4d4a-9840-3117c3490fa6
@@ -1128,6 +1246,11 @@ sounds:
     uid: a1e5d730-541e-4972-b58a-7f28eba791f2
     origname: sa1e5d730-541e-4972-b58a-7f28eba791f2.wav
     lastmod: 1627822738318
+  - name: Abstraction - Three Red Hearts - Puzzle Pieces
+    uid: 0ba1cbd8-eb73-4626-8ca6-50a2e7392888
+    origname: s0ba1cbd8-eb73-4626-8ca6-50a2e7392888.wav
+    lastmod: 1628111520490
+    isMusic: false
 styles:
   - name: Coin
     uid: f3906bb2-3cc0-4594-b901-d7f843dfd29a
@@ -1203,11 +1326,20 @@ rooms:
     gridX: 16
     gridY: 16
     lastmod: 1628025296432
-  - name: Level_00_dup
-    oncreate: fns.onRoomStart(this)
-    onstep: ''
+  - name: Level_Debug
+    oncreate: |-
+      window.fns.onRoomStart(this, 'Level_Debug')
+
+      ct.sound.spawn('Abstraction - Three Red Hearts - Puzzle Pieces', {
+          loop: true,
+          volumne: 0.3
+      })
+    onstep: |-
+      // if (ct.keyboard.lastKey?.toLowerCase() === 'q') {
+      //     window.fns.changeLevel()
+      // }
     ondraw: ''
-    onleave: ''
+    onleave: ct.sound.stop('Abstraction - Three Red Hearts - Puzzle Pieces')
     width: 640
     height: 400
     backgrounds:
@@ -1241,13 +1373,9 @@ rooms:
         extends:
           repeat: no-repeat
     copies:
-      - x: 149.07142857142856
-        'y': 360.85714285714283
+      - x: 53.071428571428555
+        'y': 312.85714285714283
         uid: 69acf836-5938-47d7-adab-6f32f4418c26
-        exts: {}
-      - x: 96
-        'y': 224
-        uid: 0dd5b6fe-299c-405d-ac0e-0f6be7b3bffd
         exts: {}
       - x: 662
         'y': 563
@@ -1773,15 +1901,15 @@ rooms:
         'y': 2128
         uid: 9267af5f-4610-4123-933b-547b5779ad95
         exts: {}
-      - x: 1296
-        'y': 2160
+      - x: 1088
+        'y': 2128
         uid: 9267af5f-4610-4123-933b-547b5779ad95
         exts: {}
-      - x: 1264
-        'y': 2160
+      - x: 1120
+        'y': 2128
         uid: 9267af5f-4610-4123-933b-547b5779ad95
         exts: {}
-      - x: 1232
+      - x: 1168
         'y': 2160
         uid: 9267af5f-4610-4123-933b-547b5779ad95
         exts: {}
@@ -1837,8 +1965,22 @@ rooms:
         'y': 1232
         uid: 9267af5f-4610-4123-933b-547b5779ad95
         exts: {}
+      - x: 1221.5
+        'y': 2162
+        uid: 3aa42a3d-476f-4dac-8b92-09ded2322514
+        exts: {}
+      - x: 1308.3333333333335
+        'y': 2130
+        uid: 3aa42a3d-476f-4dac-8b92-09ded2322514
+        exts: {}
+        tx: -1
+      - x: 1264
+        'y': 2208
+        uid: 46b2d2d2-da8c-44b8-be6f-55fdc3d47cab
+        exts: {}
+        tx: 1.7
     tiles:
-      - depth: -50
+      - depth: -100
         tiles:
           - x: 128
             'y': 160
@@ -1850,22 +1992,6 @@ rooms:
               - 1
           - x: 96
             'y': 192
-            texture: b5a45d8b-a258-40eb-8d1f-13ce35c3a99e
-            grid:
-              - 0
-              - 0
-              - 1
-              - 1
-          - x: 64
-            'y': 288
-            texture: b5a45d8b-a258-40eb-8d1f-13ce35c3a99e
-            grid:
-              - 0
-              - 0
-              - 1
-              - 1
-          - x: 64
-            'y': 320
             texture: b5a45d8b-a258-40eb-8d1f-13ce35c3a99e
             grid:
               - 0
@@ -2114,14 +2240,6 @@ rooms:
               - 1
           - x: 64
             'y': 352
-            texture: b5a45d8b-a258-40eb-8d1f-13ce35c3a99e
-            grid:
-              - 0
-              - 0
-              - 1
-              - 1
-          - x: 64
-            'y': 256
             texture: b5a45d8b-a258-40eb-8d1f-13ce35c3a99e
             grid:
               - 0
@@ -5904,14 +6022,6 @@ rooms:
               - 0
               - 1
               - 1
-          - x: 1312
-            'y': 2144
-            texture: b5a45d8b-a258-40eb-8d1f-13ce35c3a99e
-            grid:
-              - 0
-              - 0
-              - 1
-              - 1
           - x: 1280
             'y': 2048
             texture: b5a45d8b-a258-40eb-8d1f-13ce35c3a99e
@@ -5922,30 +6032,6 @@ rooms:
               - 1
           - x: 1312
             'y': 2048
-            texture: b5a45d8b-a258-40eb-8d1f-13ce35c3a99e
-            grid:
-              - 0
-              - 0
-              - 1
-              - 1
-          - x: 1280
-            'y': 2176
-            texture: b5a45d8b-a258-40eb-8d1f-13ce35c3a99e
-            grid:
-              - 0
-              - 0
-              - 1
-              - 1
-          - x: 1248
-            'y': 2176
-            texture: b5a45d8b-a258-40eb-8d1f-13ce35c3a99e
-            grid:
-              - 0
-              - 0
-              - 1
-              - 1
-          - x: 1216
-            'y': 2176
             texture: b5a45d8b-a258-40eb-8d1f-13ce35c3a99e
             grid:
               - 0
@@ -8698,6 +8784,94 @@ rooms:
               - 1
           - x: 224
             'y': 1248
+            texture: b5a45d8b-a258-40eb-8d1f-13ce35c3a99e
+            grid:
+              - 0
+              - 0
+              - 1
+              - 1
+          - x: -32
+            'y': 320
+            texture: b5a45d8b-a258-40eb-8d1f-13ce35c3a99e
+            grid:
+              - 0
+              - 0
+              - 1
+              - 1
+          - x: -32
+            'y': 288
+            texture: b5a45d8b-a258-40eb-8d1f-13ce35c3a99e
+            grid:
+              - 0
+              - 0
+              - 1
+              - 1
+          - x: -32
+            'y': 256
+            texture: b5a45d8b-a258-40eb-8d1f-13ce35c3a99e
+            grid:
+              - 0
+              - 0
+              - 1
+              - 1
+          - x: -32
+            'y': 352
+            texture: b5a45d8b-a258-40eb-8d1f-13ce35c3a99e
+            grid:
+              - 0
+              - 0
+              - 1
+              - 1
+          - x: 0
+            'y': 352
+            texture: b5a45d8b-a258-40eb-8d1f-13ce35c3a99e
+            grid:
+              - 0
+              - 0
+              - 1
+              - 1
+          - x: 32
+            'y': 352
+            texture: b5a45d8b-a258-40eb-8d1f-13ce35c3a99e
+            grid:
+              - 0
+              - 0
+              - 1
+              - 1
+          - x: 32
+            'y': 224
+            texture: b5a45d8b-a258-40eb-8d1f-13ce35c3a99e
+            grid:
+              - 0
+              - 0
+              - 1
+              - 1
+          - x: -0.0
+            'y': 224
+            texture: b5a45d8b-a258-40eb-8d1f-13ce35c3a99e
+            grid:
+              - 0
+              - 0
+              - 1
+              - 1
+          - x: -32
+            'y': 224
+            texture: b5a45d8b-a258-40eb-8d1f-13ce35c3a99e
+            grid:
+              - 0
+              - 0
+              - 1
+              - 1
+          - x: 1312
+            'y': 2144
+            texture: b5a45d8b-a258-40eb-8d1f-13ce35c3a99e
+            grid:
+              - 0
+              - 0
+              - 1
+              - 1
+          - x: 1312
+            'y': 2176
             texture: b5a45d8b-a258-40eb-8d1f-13ce35c3a99e
             grid:
               - 0
@@ -8706,7 +8880,7 @@ rooms:
               - 1
         extends:
           ctype: Solid
-        hidden: true
+        hidden: false
     uid: 8734cad9-b210-4f9f-9439-6fdbaefeb42f
     thumbnail: 6fdbaefeb42f
     extends:
@@ -8715,7 +8889,7 @@ rooms:
     gridX: 16
     gridY: 16
     backgroundColor: '#11143B'
-    lastmod: 1628025998667
+    lastmod: 1628105609792
     restrictCamera: false
 actions:
   - name: MoveX
@@ -8824,19 +8998,28 @@ scripts:
           points: 0,
           fuel: 100,
           maxFuel: 100,
-          lives: 3,
-          maxLives: 3
+          lives: 10,
+          maxLives: 10
       }
       window.globalsDefault = {...window.globals}
 
       window.fns = {
-          onRoomStart(room) {
+          onRoomStart(room, nextLevel) {
               const allCoins = [...ct.types.list['coin'], ...ct.types.list['coin_2'], ...ct.types.list['coin_5']]
               room.totalCollectables = allCoins.reduce((c1, c2) => c1 + c2.amount, 0)
+              room.nextLevel = nextLevel
+              room.switching = false
               ct.rooms.append('HUD')
           },
           reset() {
               globals = {...globalsDefault}
+          },
+          async changeLevel() {
+              if (!ct.room.switching) {
+                  ct.room.switching = true
+                  await ct.transition.slideOut(750)
+                  ct.rooms.switch(ct.room.nextLevel || 'Level_Debug')
+              }
           }
       }
   - name: types.d.ts
@@ -8884,8 +9067,9 @@ settings:
     codeModifier: minify
   branding:
     icon: -1
-    accent: '#446adb'
+    accent: '#11143B'
     invertPreloaderScheme: true
+    hideLoadingLogo: false
   fps: 30
 fonts: []
 palette:
