@@ -16112,7 +16112,7 @@ settings:
     desktopMode: maximized
   export:
     windows: true
-    linux: true
+    linux: false
     mac: true
     functionWrap: false
     codeModifier: minify
